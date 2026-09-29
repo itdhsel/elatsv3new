@@ -1,0 +1,49 @@
+<?php
+
+$url = 'http://mycpd.moh.gov.my/apc/default.aspx';
+$ic="710710105154";
+//$year= date("Y");
+$year= "2016";
+echo "YEar = ".$year."<br><br>";
+
+$data = array(
+  //"__VIEWSTATE" => "/wEPDwUJMzk1NjkxNjIwD2QWAgIDD2QWEAIDDxAPFgYeDkRhdGFWYWx1ZUZpZWxkBQJpZB4NRGF0YVRleHRGaWVsZAUDZGF5HgtfIURhdGFCb3VuZGdkEBUfATEBMgEzATQBNQE2ATcBOAE5AjEwAjExAjEyAjEzAjE0AjE1AjE2AjE3AjE4AjE5AjIwAjIxAjIyAjIzAjI0AjI1AjI2AjI3AjI4AjI5AjMwAjMxFR8BMQEyATMBNAE1ATYBNwE4ATkCMTACMTECMTICMTMCMTQCMTUCMTYCMTcCMTgCMTkCMjACMjECMjICMjMCMjQCMjUCMjYCMjcCMjgCMjkCMzACMzEUKwMfZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2RkAgUPEA8WBh8ABQJpZB8BBQVtb250aB8CZ2QQFQwHSmFudWFyeQhGZWJydWFyeQVNYXJjaAVBcHJpbANNYXkESnVuZQRKdWx5BkF1Z3VzdAlTZXB0ZW1iZXIHT2N0b2JlcghOb3ZlbWJlcghEZWNlbWJlchUMATEBMgEzATQBNQE2ATcBOAE5AjEwAjExAjEyFCsDDGdnZ2dnZ2dnZ2dnZ2RkAgcPEGQQFQMEMjAxMwQyMDE0BDIwMTUVAwQyMDEzBDIwMTQEMjAxNRQrAwNnZ2dkZAIJDxAPFgYfAAUCaWQfAQUDZGF5HwJnZBAVHwExATIBMwE0ATUBNgE3ATgBOQIxMAIxMQIxMgIxMwIxNAIxNQIxNgIxNwIxOAIxOQIyMAIyMQIyMgIyMwIyNAIyNQIyNgIyNwIyOAIyOQIzMAIzMRUfATEBMgEzATQBNQE2ATcBOAE5AjEwAjExAjEyAjEzAjE0AjE1AjE2AjE3AjE4AjE5AjIwAjIxAjIyAjIzAjI0AjI1AjI2AjI3AjI4AjI5AjMwAjMxFCsDH2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dkZAILDxAPFgYfAAUCaWQfAQUFbW9udGgfAmdkEBUMB0phbnVhcnkIRmVicnVhcnkFTWFyY2gFQXByaWwDTWF5BEp1bmUESnVseQZBdWd1c3QJU2VwdGVtYmVyB09jdG9iZXIITm92ZW1iZXIIRGVjZW1iZXIVDAExATIBMwE0ATUBNgE3ATgBOQIxMAIxMQIxMhQrAwxnZ2dnZ2dnZ2dnZ2dkZAINDxBkEBUDBDIwMTMEMjAxNAQyMDE1FQMEMjAxMwQyMDE0BDIwMTUUKwMDZ2dnZGQCDw8PZBYCHgdvbmNsaWNrBSBqYXZhc2NyaXB0OnJldHVybiBjaGVja0lzRW1wdHkoKWQCGw88KwANAGQYAQUJR3JpZFZpZXcxD2dkqQxPF4Kekuv0APLqD+s0nvzweek=",
+  "__VIEWSTATE" => "/wEPDwUJMzk1NjkxNjIwD2QWAgIDD2QWGgIDDxAPFgYeDkRhdGFWYWx1ZUZpZWxkBQJpZB4NRGF0YVRleHRGaWVsZAUDZGF5HgtfIURhdGFCb3VuZGdkEBUfATEBMgEzATQBNQE2ATcBOAE5AjEwAjExAjEyAjEzAjE0AjE1AjE2AjE3AjE4AjE5AjIwAjIxAjIyAjIzAjI0AjI1AjI2AjI3AjI4AjI5AjMwAjMxFR8BMQEyATMBNAE1ATYBNwE4ATkCMTACMTECMTICMTMCMTQCMTUCMTYCMTcCMTgCMTkCMjACMjECMjICMjMCMjQCMjUCMjYCMjcCMjgCMjkCMzACMzEUKwMfZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2RkAgUPEA8WBh8ABQJpZB8BBQVtb250aB8CZ2QQFQwHSmFudWFyeQhGZWJydWFyeQVNYXJjaAVBcHJpbANNYXkESnVuZQRKdWx5BkF1Z3VzdAlTZXB0ZW1iZXIHT2N0b2JlcghOb3ZlbWJlcghEZWNlbWJlchUMATEBMgEzATQBNQE2ATcBOAE5AjEwAjExAjEyFCsDDGdnZ2dnZ2dnZ2dnZ2RkAgcPEGQQFQMEMjAxNAQyMDE1BDIwMTYVAwQyMDE0BDIwMTUEMjAxNhQrAwNnZ2dkZAIJDxAPFgYfAAUCaWQfAQUDZGF5HwJnZBAVHwExATIBMwE0ATUBNgE3ATgBOQIxMAIxMQIxMgIxMwIxNAIxNQIxNgIxNwIxOAIxOQIyMAIyMQIyMgIyMwIyNAIyNQIyNgIyNwIyOAIyOQIzMAIzMRUfATEBMgEzATQBNQE2ATcBOAE5AjEwAjExAjEyAjEzAjE0AjE1AjE2AjE3AjE4AjE5AjIwAjIxAjIyAjIzAjI0AjI1AjI2AjI3AjI4AjI5AjMwAjMxFCsDH2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dkZAILDxAPFgYfAAUCaWQfAQUFbW9udGgfAmdkEBUMB0phbnVhcnkIRmVicnVhcnkFTWFyY2gFQXByaWwDTWF5BEp1bmUESnVseQZBdWd1c3QJU2VwdGVtYmVyB09jdG9iZXIITm92ZW1iZXIIRGVjZW1iZXIVDAExATIBMwE0ATUBNgE3ATgBOQIxMAIxMQIxMhQrAwxnZ2dnZ2dnZ2dnZ2dkZAINDxBkEBUDBDIwMTQEMjAxNQQyMDE2FQMEMjAxNAQyMDE1BDIwMTYUKwMDZ2dnZGQCDw8PZBYCHgdvbmNsaWNrBSBqYXZhc2NyaXB0OnJldHVybiBjaGVja0lzRW1wdHkoKWQCEQ8PFgIeBFRleHQFG05hbWUgOiBTQUxNSSBCSU5USSBBQkRVTExBSGRkAhMPDxYCHwQFF0hDUCA6IFBlZ2F3YWkgUGVydWJhdGFuZGQCFQ9kFgICAQ9kFgICAQ8PFgIfBAUOR3JhZGUgOiBLaGFzIENkZAIXDw8WAh8EBRpJQyBObyAoTmV3KSA6IDcxMDcxMDEwNTE1NGRkAhkPZBYCAgEPZBYCAgEPDxYCHwQFDFN1cGVydmlzb3IgLWRkAhsPPCsADQEADxYEHwJnHgtfIUl0ZW1Db3VudAIBZBYCZg9kFgQCAQ9kFgZmDw8WAh8EBQQyMDE2ZGQCAQ8PFgIfBAUCMzhkZAICDw8WAh8EBQIzOGRkAgIPDxYCHgdWaXNpYmxlaGRkGAEFCUdyaWRWaWV3MQ88KwAKAQgCAWRZw/Z80tM7vyhMC6Y6sp6coojS3g==",
+  "txtIDNo" => $ic,
+  "ddlDayFrom" => "1",
+  "ddlMthFrom" => "1",
+  "ddlYearFrom" => $year,
+  "ddlDayTo" => "31",
+  "ddlMthTo" => "12",
+  "ddlYearTo" => $year,
+  "Button1" => "Go",
+  "hdnHCP" => ""
+  );
+
+$options = array(
+  'http' => array(
+    'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
+    'method'  => 'POST',
+    'content' => http_build_query($data),
+    ),
+  );
+$context  = stream_context_create($options);
+$response = @file_get_contents($url, false, $context);
+
+
+preg_match('#No user found#Uis', $response, $nouser);
+preg_match('#<td align="center" width="100">([0-9\.]*)</td>#Uis', $response, $mycpd_year);
+preg_match('#<td align="center" width="150">([0-9\.]*)</td>#Uis', $response, $mycpd_cumulative);
+preg_match('#<td align="center" width="120">([0-9\.]*)</td>#Uis', $response, $mycpd_actual);
+
+//echo $mycpd_year;
+
+
+if($mycpd_year[1]=="") {$cpdyear=date("Y");} else {$cpdyear = $mycpd_year[1];}
+if($mycpd_cumulative[1]=="") {$cpdcum="0";} else {$cpdcum = $mycpd_cumulative[1];}
+if($mycpd_actual[1]=="") {$cpdact="0";} else {$cpdact = $mycpd_actual[1];}
+
+echo "Year: ".$mycpd_year[1]." Cumulative: ".$mycpd_cumulative[1]."  Actual: ".$mycpd_actual[1]."";
+
+
+?>

@@ -1,0 +1,330 @@
+<?php 
+
+session_start();
+include('privcheck.php');
+
+if($_SESSION ['level'] > 0)
+{
+
+include('files/db.php');
+
+$nokp = $_GET['nokp'] ?? '';
+
+$query2  = "SELECT * FROM peribadi WHERE nokp = '$nokp'";
+$result2 = mysqli_query($conn, $query2);
+$found2 = mysqli_num_rows($result2);
+$capture2 = mysqli_fetch_array ($result2);
+
+
+?>
+
+<?php include('pagetitleheader.php'); ?> 
+
+</head>
+<?php include('header.php'); ?>
+
+<?php include('rightmenu2.php'); ?> 
+
+<td align="center" valign="top" bgcolor="#f1e6e5" width="1000">
+
+<input name="nokp" type="hidden" id="nokp"  value="<?php echo htmlspecialchars($nokp); ?>"/>
+
+<table width="100%"><tr><td height="30" colspan="2" align="center" valign="middle" bgcolor="#8B8378"><div class="style21">PAPARAN MAKLUMAT KURSUS KAKITANGAN</div></td></tr></table>
+
+<table width="100%" border="0" cellpadding="2" cellspacing="2" class="tablestyleB">
+<tr>
+<td colspan="5" align="center" valign="middle" bgcolor=#8B8378><div align="center" class="style21">BUTIR - BUTIR PERIBADI </div></td>
+</tr>
+
+<tr>
+<td rowspan=7 width="250" align=right>&nbsp;</td>
+<td width="100"><span class="style20">Nama Pegawai</span> </td><td>: </td>
+<td align="left"><span class="style19"><?php  echo htmlspecialchars($capture2["namapegawai"] ?? '');?></span></td>
+<td rowspan=7 width="100">&nbsp;</td>
+</tr>
+
+<tr>
+<td><span class="style20">No  IC </span> </td><td>: </td>
+<td align="left"><span class="style19"><?php  echo htmlspecialchars($capture2["nokp"] ?? '');?></span></td>
+</tr>
+
+<tr>
+<td><strong>Jawatan</strong> </td><td>: </td>
+<td align="left"><span class="style19"><?php  echo htmlspecialchars($capture2["skim_khidmat"] ?? '');?></span></td>
+</tr>
+
+<tr>
+<td><span class="style20">Gred </span> </td><td>: </td>
+<td align="left"><span class="style19"><?php  echo htmlspecialchars($capture2["gredhakiki"] ?? '');?>
+</span></td>
+</tr>
+
+<tr>
+<td><span class="style20">Kumpulan </span> </td><td>: </td>
+<td align="left"><span class="style19"><?php  echo htmlspecialchars($capture2["kumpulan"] ?? '');?></span></td>
+</tr>
+
+<tr>
+<td><strong>Jabatan </strong></td><td>: </td>
+<td align="left"><span class="style19"><?php  echo htmlspecialchars($capture2["jabatan"] ?? '');?></span></td>
+</tr>
+
+<tr>
+<td><strong>Email </strong></td><td>: </td>
+<td align="left"><span class="style19"><?php  echo htmlspecialchars($capture2["email"] ?? '');?></span></td>
+</tr>
+
+</table>
+
+<?php
+$year = $_POST['tahun'] ?? date('Y');
+
+// get data from mycpd function
+/*
+if($_SESSION ['level'] > 3)
+{
+    
+require_once('myCPD.php');
+
+//set_time_limit(0);
+
+$jawatan=$capture2['skim_khidmat'] ?? '';
+$year= date("Y");
+
+$cpdact=checkmycpd($nokp,$jawatan,1);
+$cpdcum=checkmycpd($nokp,$jawatan,2);
+
+        
+echo "<br><table width='100%'' border='0' cellpadding='2' cellspacing='2' class='tablestyleB'>";
+echo "<tr><td align='center' valign='middle' bgcolor=#8B8378 colspan=6><div align='center' class='style21'><label for='tahun'>MAKLUMAT SEMASA DARI MYCPD2 POINTS (".$year.")</div></td></tr>";
+echo "</table>";
+if ($cpdact>39) { $bgcolor="#4D944D"; } else  { $bgcolor="#FF3333"; }
+echo "<table width='80%' border='0' cellpadding='2' cellspacing='2' class='tablestyleB' bgcolor='#f1988a'>";
+echo "<tr><td bgcolor='#cccccc' width='15%' align=center><b>Jumlah Point Terkumpul</b></td><td bgcolor='#ffffff' align='center' width='15%'>". $cpdcum ."</td><td bgcolor='#cccccc' width='15%' align=center><b>Jumlah Point Sebenar</b></td><td width='15%' bgcolor='#ffffff' align='center'>". $cpdact."</td><td align=center bgcolor='$bgcolor'><b>Keperluan 40 CPD Point</b></td></tr>";
+echo "</table>";
+
+// end of mycpd grab function
+
+}
+else
+{
+$querycpd  = "SELECT nokp,year,mycpda,mycpdc,DATE_FORMAT(mycpddate,'%d-%m-%Y') as datecpd FROM infokursus WHERE nokp = '$nokp' and year = '$year'";
+$resultcpd = mysqli_query($conn, $querycpd);
+$foundcpd = mysqli_num_rows($resultcpd);
+$capturecpd = mysqli_fetch_array ($resultcpd);
+$cpdcum=$capturecpd["mycpdc"] ?? 0;
+$cpdact=$capturecpd["mycpda"] ?? 0;
+$cpddate=$capturecpd["datecpd"] ?? '';
+
+//$cpddate=strtotime($cpddate);
+//$cpddate=date( 'd-m-Y', $cpddate );
+
+echo "<br><table width='100%'' border='0' cellpadding='2' cellspacing='2' class='tablestyleB'>";
+echo "<tr><td align='center' valign='middle' bgcolor=#8B8378 colspan=6><div align='center' class='style21'><label for='tahun'>MAKLUMAT MYCPD POINTS SEHINGGA $cpddate</div></td></tr>";
+echo "</table>";
+if ($cpdact>39) { $bgcolor="#4D944D"; } else  { $bgcolor="#FF3333"; }
+echo "<table width='80%' border='0' cellpadding='2' cellspacing='2' class='tablestyleB' bgcolor='#f1988a'>";
+echo "<tr><td bgcolor='#cccccc' width='15%' align=center><b>Jumlah Point Terkumpul</b></td><td bgcolor='#ffffff' align='center' width='15%'>". $cpdcum ."</td><td bgcolor='#cccccc' width='15%' align=center><b>Jumlah Point Sebenar</b></td><td width='15%' bgcolor='#ffffff' align='center'>". $cpdact."</td><td align=center bgcolor='$bgcolor'><b>Keperluan 40 CPD Point</b></td></tr>";
+echo "</table>";
+
+}
+*/
+
+
+?>
+<br>
+
+<table width="100%" border="0" cellpadding="2" cellspacing="2" class="tablestyleB">
+<tr>
+<td align="center" valign="middle" bgcolor=#8B8378 colspan=7><div align="center" class="style21">
+
+
+  <form id="form1" name="form1" method="post" action="staff_kursus.php?nokp=<?php  echo htmlspecialchars($nokp);?>">
+    <label for="tahun">BUTIR - BUTIR KURSUS YANG TELAH DIHADIRI (TAHUN: </label>
+    <select name="tahun">
+      <option value="<?php echo date("Y"); ?>" <?php if (($_POST['tahun'] ?? '') == date("Y")) { echo "selected='selected'";}?> ><?php echo date("Y"); ?></option>
+      <option value="<?php echo date("Y",strtotime("-1 year")); ?>" <?php if (($_POST['tahun'] ?? '') == date("Y",strtotime("-1 year"))) { echo "selected='selected'";}?> ><?php echo date("Y",strtotime("-1 year")); ?></option>
+      <option value="<?php echo date("Y",strtotime("-2 year")); ?>" <?php if (($_POST['tahun'] ?? '') == date("Y",strtotime("-2 year"))) { echo "selected='selected'";}?> ><?php echo date("Y",strtotime("-2 year")); ?></option>
+      
+	  <?php  
+	  
+
+$tahun = $_POST['tahun'] ?? date('Y');
+
+$query2  = "SELECT * FROM peribadi WHERE nokp = '$nokp'";
+$result2 = mysqli_query($conn, $query2);
+$found2 = mysqli_num_rows($result2);
+$capture2 = mysqli_fetch_array ($result2);
+
+$query  = "SELECT * FROM kursus WHERE nokp2 = '$nokp' and YEAR(tarikh_mula)=$tahun ORDER BY tarikh_mula";
+$result = mysqli_query($conn, $query);
+$found = mysqli_num_rows($result);
+
+$query3  = "SELECT nama_kursus FROM kursus WHERE nokp2 = '$nokp' GROUP BY nama_kursus ORDER BY nama_kursus";
+$result3 = mysqli_query($conn, $query3);
+
+$nokp = $_GET['nokp'] ?? '';
+	  
+	  
+	  ?>
+	  
+      
+    </select>
+  )
+  <input type="submit" name="cari" id="cari" value="Cari" />
+  </form>
+ 
+
+</div>
+
+</td>
+</tr>
+
+<tr><td align="center">
+
+<table width="99%" cellpadding="2" cellspacing="2" bordor=1 bgcolor="#f1988a">
+
+<?php  if($found > 0) { ?>
+
+<tr>
+<td align="center" valign="middle" bordercolor="#000000" bgcolor="#CCCCCC" class="style10">NO.</td>
+<td align="center" valign="middle" bordercolor="#000000" bgcolor="#CCCCCC" class="style10">JENIS KURSUS</td>
+<td align="center" valign="middle" bordercolor="#000000" bgcolor="#CCCCCC" class="style10">NAMA KURSUS</td>
+<td align="center" valign="middle" bordercolor="#000000" bgcolor="#CCCCCC" class="style10">TARIKH MULA</td>
+<td align="center" valign="middle" bordercolor="#000000" bgcolor="#CCCCCC" class="style10">TARIKH TAMAT </td>
+<td align="center" valign="middle" bordercolor="#000000" bgcolor="#CCCCCC" class="style10">TEMPOH</td>
+<td align="center" valign="middle" bordercolor="#000000" bgcolor="#CCCCCC" class="style10">STATUS PENGESAHAN</td>
+<?php  if($_SESSION ['level'] > 2) { ?>
+<td align="center" valign="middle" bordercolor="#000000" bgcolor="#CCCCCC" class="style10">HAPUS</td>
+<?php  } ?>
+</tr>
+
+<?php  
+$i=1; 
+$totaldays=0;
+$totalhrs=0;
+while($row = mysqli_fetch_array($result)) {
+$datemula=date('d-m-Y', strtotime($row['tarikh_mula']));	
+$dateakhir=date('d-m-Y', strtotime($row['tarikh_tamat']));
+?>
+
+<tr bgcolor="#ffffff">
+<td bordercolor="#000000" class="style10"><?php  echo $i++; ?></td>
+<td bordercolor="#000000" class="style10" align=center><?php echo htmlspecialchars($row['jenis_kursus'] ?? ''); ?></td>  
+<?php  if($_SESSION ['level'] > 2 OR ($_SESSION ['level'] == 1 AND ($row['valid'] ?? 0) == 0 )) { ?>
+<td bordercolor="#000000" class="style10" align="left">
+<a class="style10" href='staff_kursus_detail.php?nokp=<?php  echo htmlspecialchars($nokp); ?>&id=<?php echo $row['id'] ?? '' ?>&nama_kursus=<?php echo urlencode($row['nama_kursus'] ?? '') ?>' ><?php echo htmlspecialchars($row['nama_kursus'] ?? ''); ?></a></td>
+<?php  } else {?>
+<td bordercolor="#000000" class="style10" align="left"><?php echo htmlspecialchars($row['nama_kursus'] ?? ''); ?></td>         
+<?php  } ?>          
+<td bordercolor="#000000" class="style10"><div align="center"><?php echo $datemula ?></div></td>
+<td bordercolor="#000000" class="style10"><div align="center"><?php echo $dateakhir ?></div></td>
+<td bordercolor="#000000" class="style10"><div align="center"><?php echo $row['total_hari'] ?? 0 ?> hari <?php echo $row['jam_tinggal'] ?? 0 ?> jam</div></td>    
+<?php  if(($row['valid'] ?? 0) == 1) { ?>
+<td bgcolor='#4D944D'>DISAHKAN</td>
+<?php  } else { ?>
+<td bgcolor='#CCFF33'>BELUM DISAHKAN</td>
+<?php  } ?>
+<?php  if($_SESSION ['level'] > 2) { ?>
+   <td align="center"><a onclick="return confirmSubmit();" href="staff_kursus_delete_berjaya.php?nokp=<?php  echo htmlspecialchars($nokp);?>&amp;nama_kursus=<?php echo urlencode($row['nama_kursus'] ?? '') ?>&amp;
+id=<?php echo $row['id'] ?? '' ?>"><img src='images/delete.png' title='Hapuskan rekod ini?' width='16' height='16' border='0' /></a></td> 
+<?php  } ?>
+</tr>
+<?php           
+if(($row['valid'] ?? 0) == 1)
+{       
+$totaldays=$totaldays+($row['total_hari'] ?? 0); 
+$totalhrs=$totalhrs+($row['jam_tinggal'] ?? 0); 
+}   
+} 
+?>
+
+<tr bgcolor="#f1e6e5">
+<td colspan=7>
+<?php  if($_SESSION ['level'] > 2 OR ($_SESSION ['level'] == 1 AND ($row['valid'] ?? 0) == 0 )) { ?>
+<div align="left"><span class="style25"><a id="blink" style="text-decoration:blink">* Pilih 'NAMA KURSUS' jika anda ingin kemaskini rekod <br>
+( Kakitangan sendiri masih boleh meminda maklumat kursus yang belum disahkan. Kursus yang telah disahkan hanya boleh dipinda oleh Unit Latihan )</a> </span></div>
+<?php  } ?>
+
+<?php //report tahun semasa
+if ($tahun==date('Y')) { 
+?>
+<form action="report_kursus_individu.php" method="post" name="report7" target="_blank" id="report7">
+<input name="tarikh_mula" type="hidden" id="tarikh_mula" value="01-01-<?php echo date("Y");?>">
+<input name="tarikh_tamat" type="hidden" id="tarikh_tamat" value="<?php echo date('d-m-Y');?>">
+<input type="hidden" name="nokp" id="nokp" value="<?php echo htmlspecialchars($nokp); ?>">
+<div align="right"><input type="submit" value="Cetak Laporan Latihan Tahun Semasa"></div>
+<!-- <input type="image" src="images/print_button_icon21.png" width="70" height="30" align="right" alt="Submit Form" border=0>  -->
+</form> 
+<?php //report tahun lain
+} else 
+{
+?>
+<form action="report_kursus_individu.php" method="post" name="report7" target="_blank" id="report7">
+<input name="tarikh_mula" type="hidden" id="tarikh_mula" value="01-01-<?php echo $tahun;?>">
+<input name="tarikh_tamat" type="hidden" id="tarikh_tamat" value="31-12-<?php echo $tahun;?>">
+<input type="hidden" name="nokp" id="nokp" value="<?php echo htmlspecialchars($nokp); ?>">
+<div align="right"><input type="submit" value="Cetak Laporan Latihan Tahun <?php echo $tahun;?>"></div>
+</form> 
+<?php
+}
+?>
+</td>
+</tr>
+
+<tr bgcolor="#f1e6e5">
+<?php 
+if ($totalhrs>5){
+$hourstoday=floor($totalhrs/6);	
+$totaldays=$totaldays+$hourstoday;
+$totalhrscalculated=$totalhrs%6;
+} else {
+$totaldays=$totaldays+0;
+$totalhrscalculated=$totalhrs;
+}
+
+if ($totaldays>6){
+?>
+<td colspan=7 align=center bgcolor=#4D944D>
+<strong>[ Jumlah kursus: <?php echo $totaldays;?> hari <?php echo $totalhrscalculated;?> jam berdasarkan 6 jam = 1 hari ]</strong><br>
+*Hanya kursus yang telah disahkan akan dikira
+<?php  
+} else {
+?>
+<td colspan=7 align=center bgcolor=#FF3333>
+<strong>[ Jumlah kursus: <?php echo $totaldays;?> hari <?php echo $totalhrscalculated;?> jam berdasarkan 6 jam = 1 hari ]</strong><br>*Hanya kursus yang telah disahkan akan dikira
+<?php 
+}
+?>
+
+</td>
+</tr>
+
+<?php  } ?>
+<?php  if($found == 0) { ?>
+
+<tr>
+<td width="100%" colspan="7" align="center" valign="middle" class="style22">TIADA KURSUS YANG TELAH DIHADIRI !!</td>
+</tr>
+
+<?php  } ?>		
+</table></td>
+</tr>
+</table>
+
+<br />
+           
+</td>
+<?php include('footer.php'); ?> 
+<?php 
+}
+else
+{
+?>
+<script language="javascript" type="text/javascript">
+alert('Hanya Pengguna Berdaftar Dibenarkan Menggunakan Sistem Ini');
+location='index.php';
+</script>
+<?php 
+}
+?>

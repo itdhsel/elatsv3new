@@ -1,0 +1,2 @@
+Mudah digunakan=9
+Sukar digunakan=6

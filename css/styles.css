@@ -1,0 +1,222 @@
+a:link {  color: #333333; text-decoration: none}
+a:visited {  color: #333333; text-decoration: none}
+a:hover {  color: #333333; text-decoration: none}
+.logo {  font-family: Tahoma; font-size: 26px; font-weight: bold; color: #4BA2D8}
+.text {  font-family: Tahoma; font-size: 11px; color: #666666}
+.title {  font-family: Tahoma; font-size: 12px; font-weight: bold; color: #333333}
+.text1 {
+font-family: Tahoma; font-size: 11px; color: #FFFFFF
+}
+a.a:link {
+	font-family: tahoma;
+	font-size: 11px;
+	font-weight: normal;
+	color: #FFFFFF;
+}
+a.a:hover {
+	font-family: tahoma;
+	font-size: 11px;
+	font-weight: normal;
+	color: #000000;
+}
+a.a:visited {
+	font-family: tahoma;
+	font-size: 11px;
+	font-weight: normal;
+	color: #FFFFFF;
+}
+
+.style00 {
+font-family:Tahoma;
+letter-spacing:0px;
+font-size:10px;
+color:#666666}
+
+.style01 {
+
+font-family:Tahoma;
+letter-spacing:0px;
+font-size:11px;
+color:#000000}
+
+.style02 {
+font-family:Tahoma;
+letter-spacing:0px;
+font-size:11px;
+color:#10244c}
+
+.style03 {
+font-family:Tahoma;
+letter-spacing:0px;
+font-size:11px;
+color:#666666}
+
+.style04 {
+font-family:Tahoma; letter-spacing:0px;
+font-size:11px;
+color:#999999}
+
+
+.style05 {
+font-family:Tahoma;
+font-size:11px;
+letter-spacing:0px;
+color:#0066FF;
+}
+
+.style06 {
+font-family:Tahoma;
+letter-spacing:0px;
+font-size:11px;
+color:#FFFFFF;
+}
+
+.style07 {
+font-family:Tahoma;
+letter-spacing:0px;
+font-size:11px;
+color:#FFFFFF;
+}
+
+.style8 {
+font-family:Tahoma;
+letter-spacing:0px;
+font-size:11px;
+color:#8B9000;
+}
+
+.style9 {
+font-family:Tahoma;
+letter-spacing:0px;
+font-size:11px;
+color:#9F8330;
+}
+
+.style10 {
+
+font-family:Tahoma;
+font-weight:bold;
+letter-spacing:0px;
+font-size:11px;
+color:#000000
+}
+
+.style11 {
+
+font-family:Tahoma;
+font-weight:bold;
+letter-spacing:0px;
+font-size:10px;
+color:#000000
+}
+
+.style12 {
+font-family:Tahoma;
+text-transform:capitalize;
+letter-spacing:0px;
+font-size:11px;
+color:#666666}
+
+.style13 {
+font-family:"Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Helvetica, Arial, sans-serif;
+letter-spacing:0px;
+font-size:13px;
+color:#666666}
+
+
+.style14 {font-family: Geneva, Arial, Helvetica, sans-serif;
+	font-size: 14px;
+	font-weight: bold;
+	color: #006699;
+}
+
+.style15 {font-family: Geneva, Arial, Helvetica, sans-serif; 
+	font-size: 12px; 
+}
+
+.style16 {font-family: Geneva, Arial, Helvetica, sans-serif}
+
+.style17 {color: #000000;
+	font-weight: bold;
+	font-family: Geneva, Arial, Helvetica, sans-serif;
+	font-size: 12px;
+}
+
+.style18 {
+
+font-family:Tahoma;
+font-weight:bold;
+letter-spacing:0px;
+font-size:11px;
+color:#333333
+}
+
+.style19 {
+
+font-family:Tahoma;
+font-weight:bold;
+letter-spacing:0px;
+font-size:10px;
+color:#666666
+}
+
+.style20 {
+
+font-family:Tahoma;
+font-weight:bold;
+letter-spacing:0px;
+font-size:11px;
+color:#000000
+}
+
+.style21 {
+
+font-family:Tahoma;
+font-weight:bold;
+letter-spacing:0px;
+font-size:11px;
+color:#FFFFFF
+}
+
+.style22 {
+font-family:Tahoma;
+font-weight:bold;
+letter-spacing:0px;
+font-size:10px;
+color:#FF0000
+}
+
+.style26 {
+color: #FF0000
+}
+
+.tablestyleB {
+border:0px solid #50A7DD;
+font-family:Tahoma;
+font-size:11px;
+background-repeat:repeat-x;
+background-position:bottom;
+}
+
+td
+{
+font-size:11px;
+font-family:Tahoma;
+}
+
+th
+{
+font-size:11px;
+font-family:Tahoma;
+font-weight:bold;
+}
+
+select
+{
+font-size:10px;
+}
+
+input
+{
+font-size:10px;
+}

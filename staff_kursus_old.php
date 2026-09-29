@@ -1,0 +1,397 @@
+<?php 
+
+session_start();
+include('privcheck.php');
+
+if($_SESSION ['level'] > 0)
+{
+
+include('files/db.php');
+
+$nokp = $_GET['nokp'];
+
+$query2  = "SELECT * FROM peribadi WHERE nokp = '$nokp'";
+$result2 = mysqli_query($query2);
+$found2 = mysqli_num_rows($result2);
+$capture2 = mysqli_fetch_array ($result2);
+
+
+?>
+
+<?php include('pagetitleheader.php'); ?> 
+
+</head>
+<?php include('header.php'); ?>
+
+<?php include('rightmenu2.php'); ?> 
+
+<td align="center" valign="top" bgcolor="#f1e6e5" width="1000">
+
+<input name="nokp" type="hidden" id="nokp"  value="<?php echo $nokp; ?>"/>
+
+<table width="100%"><tr><td height="30" colspan="2" align="center" valign="middle" bgcolor="#8B8378"><div class="style21">PAPARAN MAKLUMAT KURSUS KAKITANGAN</div></td></tr></table>
+
+<table width="100%" border="0" cellpadding="2" cellspacing="2" class="tablestyleB">
+<tr>
+<td colspan="5" align="center" valign="middle" bgcolor=#8B8378><div align="center" class="style21">BUTIR - BUTIR PERIBADI </div></td>
+</tr>
+
+<tr>
+<td rowspan=7 width="250" align=right>&nbsp;</td>
+<td width="100"><span class="style20">Nama Pegawai</span> </td><td>: </td>
+<td align="left"><span class="style19"><?php  echo $capture2["namapegawai"];?></span></td>
+<td rowspan=7 width="100">&nbsp;</td>
+</tr>
+
+<tr>
+<td><span class="style20">No  IC </span> </td><td>: </td>
+<td align="left"><span class="style19"><?php  echo $capture2["nokp"];?></span></td>
+</tr>
+
+<tr>
+<td><strong>Jawatan</strong> </td><td>: </td>
+<td align="left"><span class="style19"><?php  echo $capture2["skim_khidmat"];?></span></td>
+</tr>
+
+<tr>
+<td><span class="style20">Gred </span> </td><td>: </td>
+<td align="left"><span class="style19"><?php  echo $capture2["gredhakiki"];?>
+</span></td>
+</tr>
+
+<tr>
+<td><span class="style20">Kumpulan </span> </td><td>: </td>
+<td align="left"><span class="style19"><?php  echo $capture2["kumpulan"];?></span></td>
+</tr>
+
+<tr>
+<td><strong>Jabatan </strong></td><td>: </td>
+<td align="left"><span class="style19"><?php  echo $capture2["jabatan"];?></span></td>
+</tr>
+
+<tr>
+<td><strong>Email </strong></td><td>: </td>
+<td align="left"><span class="style19"><?php  echo $capture2["email"];?></span></td>
+</tr>
+
+</table>
+
+<?php
+
+// get data from mycpd function
+if ($_POST['tahun']=="") {$year=date('Y');} else { $year = $_POST['tahun'];}
+
+if($_SESSION ['level'] > 3)
+{
+set_time_limit(0);
+
+$url = 'http://mycpd.moh.gov.my/apc/default.aspx';
+$ic=$nokp;
+//$year= date("Y");
+//if ($_POST['tahun']=="") {$year=date('Y');} else { $year = $_POST['tahun'];}
+//$year= "2015";
+
+$data = array(
+  //"__VIEWSTATE" => "/wEPDwUJMzk1NjkxNjIwD2QWAgIDD2QWEAIDDxAPFgYeDkRhdGFWYWx1ZUZpZWxkBQJpZB4NRGF0YVRleHRGaWVsZAUDZGF5HgtfIURhdGFCb3VuZGdkEBUfATEBMgEzATQBNQE2ATcBOAE5AjEwAjExAjEyAjEzAjE0AjE1AjE2AjE3AjE4AjE5AjIwAjIxAjIyAjIzAjI0AjI1AjI2AjI3AjI4AjI5AjMwAjMxFR8BMQEyATMBNAE1ATYBNwE4ATkCMTACMTECMTICMTMCMTQCMTUCMTYCMTcCMTgCMTkCMjACMjECMjICMjMCMjQCMjUCMjYCMjcCMjgCMjkCMzACMzEUKwMfZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2RkAgUPEA8WBh8ABQJpZB8BBQVtb250aB8CZ2QQFQwHSmFudWFyeQhGZWJydWFyeQVNYXJjaAVBcHJpbANNYXkESnVuZQRKdWx5BkF1Z3VzdAlTZXB0ZW1iZXIHT2N0b2JlcghOb3ZlbWJlcghEZWNlbWJlchUMATEBMgEzATQBNQE2ATcBOAE5AjEwAjExAjEyFCsDDGdnZ2dnZ2dnZ2dnZ2RkAgcPEGQQFQMEMjAxMwQyMDE0BDIwMTUVAwQyMDEzBDIwMTQEMjAxNRQrAwNnZ2dkZAIJDxAPFgYfAAUCaWQfAQUDZGF5HwJnZBAVHwExATIBMwE0ATUBNgE3ATgBOQIxMAIxMQIxMgIxMwIxNAIxNQIxNgIxNwIxOAIxOQIyMAIyMQIyMgIyMwIyNAIyNQIyNgIyNwIyOAIyOQIzMAIzMRUfATEBMgEzATQBNQE2ATcBOAE5AjEwAjExAjEyAjEzAjE0AjE1AjE2AjE3AjE4AjE5AjIwAjIxAjIyAjIzAjI0AjI1AjI2AjI3AjI4AjI5AjMwAjMxFCsDH2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dkZAILDxAPFgYfAAUCaWQfAQUFbW9udGgfAmdkEBUMB0phbnVhcnkIRmVicnVhcnkFTWFyY2gFQXByaWwDTWF5BEp1bmUESnVseQZBdWd1c3QJU2VwdGVtYmVyB09jdG9iZXIITm92ZW1iZXIIRGVjZW1iZXIVDAExATIBMwE0ATUBNgE3ATgBOQIxMAIxMQIxMhQrAwxnZ2dnZ2dnZ2dnZ2dkZAINDxBkEBUDBDIwMTMEMjAxNAQyMDE1FQMEMjAxMwQyMDE0BDIwMTUUKwMDZ2dnZGQCDw8PZBYCHgdvbmNsaWNrBSBqYXZhc2NyaXB0OnJldHVybiBjaGVja0lzRW1wdHkoKWQCGw88KwANAGQYAQUJR3JpZFZpZXcxD2dkqQxPF4Kekuv0APLqD+s0nvzweek=",
+  "__VIEWSTATE" => "/wEPDwUJMzk1NjkxNjIwD2QWAgIDD2QWGgIDDxAPFgYeDkRhdGFWYWx1ZUZpZWxkBQJpZB4NRGF0YVRleHRGaWVsZAUDZGF5HgtfIURhdGFCb3VuZGdkEBUfATEBMgEzATQBNQE2ATcBOAE5AjEwAjExAjEyAjEzAjE0AjE1AjE2AjE3AjE4AjE5AjIwAjIxAjIyAjIzAjI0AjI1AjI2AjI3AjI4AjI5AjMwAjMxFR8BMQEyATMBNAE1ATYBNwE4ATkCMTACMTECMTICMTMCMTQCMTUCMTYCMTcCMTgCMTkCMjACMjECMjICMjMCMjQCMjUCMjYCMjcCMjgCMjkCMzACMzEUKwMfZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2RkAgUPEA8WBh8ABQJpZB8BBQVtb250aB8CZ2QQFQwHSmFudWFyeQhGZWJydWFyeQVNYXJjaAVBcHJpbANNYXkESnVuZQRKdWx5BkF1Z3VzdAlTZXB0ZW1iZXIHT2N0b2JlcghOb3ZlbWJlcghEZWNlbWJlchUMATEBMgEzATQBNQE2ATcBOAE5AjEwAjExAjEyFCsDDGdnZ2dnZ2dnZ2dnZ2RkAgcPEGQQFQMEMjAxNAQyMDE1BDIwMTYVAwQyMDE0BDIwMTUEMjAxNhQrAwNnZ2dkZAIJDxAPFgYfAAUCaWQfAQUDZGF5HwJnZBAVHwExATIBMwE0ATUBNgE3ATgBOQIxMAIxMQIxMgIxMwIxNAIxNQIxNgIxNwIxOAIxOQIyMAIyMQIyMgIyMwIyNAIyNQIyNgIyNwIyOAIyOQIzMAIzMRUfATEBMgEzATQBNQE2ATcBOAE5AjEwAjExAjEyAjEzAjE0AjE1AjE2AjE3AjE4AjE5AjIwAjIxAjIyAjIzAjI0AjI1AjI2AjI3AjI4AjI5AjMwAjMxFCsDH2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dkZAILDxAPFgYfAAUCaWQfAQUFbW9udGgfAmdkEBUMB0phbnVhcnkIRmVicnVhcnkFTWFyY2gFQXByaWwDTWF5BEp1bmUESnVseQZBdWd1c3QJU2VwdGVtYmVyB09jdG9iZXIITm92ZW1iZXIIRGVjZW1iZXIVDAExATIBMwE0ATUBNgE3ATgBOQIxMAIxMQIxMhQrAwxnZ2dnZ2dnZ2dnZ2dkZAINDxBkEBUDBDIwMTQEMjAxNQQyMDE2FQMEMjAxNAQyMDE1BDIwMTYUKwMDZ2dnZGQCDw8PZBYCHgdvbmNsaWNrBSBqYXZhc2NyaXB0OnJldHVybiBjaGVja0lzRW1wdHkoKWQCEQ8PFgIeBFRleHQFG05hbWUgOiBTQUxNSSBCSU5USSBBQkRVTExBSGRkAhMPDxYCHwQFF0hDUCA6IFBlZ2F3YWkgUGVydWJhdGFuZGQCFQ9kFgICAQ9kFgICAQ8PFgIfBAUOR3JhZGUgOiBLaGFzIENkZAIXDw8WAh8EBRpJQyBObyAoTmV3KSA6IDcxMDcxMDEwNTE1NGRkAhkPZBYCAgEPZBYCAgEPDxYCHwQFDFN1cGVydmlzb3IgLWRkAhsPPCsADQEADxYEHwJnHgtfIUl0ZW1Db3VudAIBZBYCZg9kFgQCAQ9kFgZmDw8WAh8EBQQyMDE2ZGQCAQ8PFgIfBAUCMzhkZAICDw8WAh8EBQIzOGRkAgIPDxYCHgdWaXNpYmxlaGRkGAEFCUdyaWRWaWV3MQ88KwAKAQgCAWRZw/Z80tM7vyhMC6Y6sp6coojS3g==",
+  "txtIDNo" => $ic,
+  "ddlDayFrom" => "1",
+  "ddlMthFrom" => "1",
+  "ddlYearFrom" => $year,
+  "ddlDayTo" => "31",
+  "ddlMthTo" => "12",
+  "ddlYearTo" => $year,
+  "Button1" => "Go",
+  "hdnHCP" => ""
+  );
+
+$options = array(
+  'http' => array(
+    'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
+    'method'  => 'POST',
+    'content' => http_build_query($data),
+    ),
+  );
+$context  = stream_context_create($options);
+$response = @file_get_contents($url, false, $context);
+
+//echo $response;
+if ($response===FALSE) { 
+echo "<br><table width='100%'' border='0' cellpadding='2' cellspacing='2' class='tablestyleB'>";
+
+$querycpd  = "SELECT nokp,year,mycpda,mycpdc,DATE_FORMAT(mycpddate,'%d-%m-%Y') as datecpd FROM infokursus WHERE nokp = '$nokp' and year = '$year'";
+$resultcpd = mysqli_query($querycpd);
+$foundcpd = mysqli_num_rows($resultcpd);
+$capturecpd = mysqli_fetch_array ($resultcpd);
+$cpdcum=$capturecpd["mycpdc"];
+$cpdact=$capturecpd["mycpda"];
+$cpddate=$capturecpd["datecpd"];
+
+//$cpddate=strtotime($cpddate);
+//$cpddate=date( 'd-m-Y', $cpddate );
+echo "<tr><td align='center' valign='middle' bgcolor=#8B8378 colspan=6><div align='center' class='style21'><label for='tahun'>MAKLUMAT SEMASA DARI MYCPD POINTS (".$year.")</div></td></tr>";
+echo "<tr><td align=center colspan=5 bgcolor=#b0b0b0><b>:: ERROR CONNECTING TO MYCPD SERVER TO RETRIEVE CURRENT CPD DATA, DISPLAYING STORED DATA FROM $cpddate ::</b></td><tr>"; 
+//echo "<br><table width='100%'' border='0' cellpadding='2' cellspacing='2' class='tablestyleB'>";
+//echo "<tr><td align='center' valign='middle' bgcolor=#8B8378 colspan=6><div align='center' class='style21'><label for='tahun'>MAKLUMAT MYCPD POINTS SEHINGGA $cpddate</div></td></tr>";
+//echo "</table>";
+if ($cpdact>39) { $bgcolor="#4D944D"; } else  { $bgcolor="#FF3333"; }
+//echo "<table width='80%' border='0' cellpadding='2' cellspacing='2' class='tablestyleB' bgcolor='#f1988a'>";
+echo "<tr><td bgcolor='#cccccc' width='15%' align=center><b>Jumlah Point Terkumpul</b></td><td bgcolor='#ffffff' align='center' width='15%'>". $cpdcum ."</td><td bgcolor='#cccccc' width='15%' align=center><b>Jumlah Point Sebenar</b></td><td width='15%' bgcolor='#ffffff' align='center'>". $cpdact."</td><td align=center bgcolor='$bgcolor'><b>Keperluan 40 CPD Point</b></td></tr>";
+//echo "</table>";
+
+echo "</table>";
+
+}
+
+else {
+
+preg_match('#No user found#Uis', $response, $nouser);
+preg_match('#<td align="center" width="100">([0-9\.]*)</td>#Uis', $response, $mycpd_year);
+preg_match('#<td align="center" width="150">([0-9\.]*)</td>#Uis', $response, $mycpd_cumulative);
+preg_match('#<td align="center" width="120">([0-9\.]*)</td>#Uis', $response, $mycpd_actual);
+
+//echo $mycpd_year;
+
+//if($mycpd_year==date("Y")) {
+
+if($mycpd_year[1]=="") {$cpdyear=date("Y");} else {$cpdyear = $mycpd_year[1];}
+if($mycpd_cumulative[1]=="") {$cpdcum="0";} else {$cpdcum = $mycpd_cumulative[1];}
+if($mycpd_actual[1]=="") {$cpdact="0";} else {$cpdact = $mycpd_actual[1];}
+
+//echo "Year: ".$mycpd_year[1]." Cumulative: ".$mycpd_cumulative[1]."  Actual: ".$mycpd_actual[1]."";
+
+//} else { echo "Not registered with MyCPD";}
+
+echo "<br><table width='100%'' border='0' cellpadding='2' cellspacing='2' class='tablestyleB'>";
+echo "<tr><td align='center' valign='middle' bgcolor=#8B8378 colspan=6><div align='center' class='style21'><label for='tahun'>MAKLUMAT SEMASA DARI MYCPD POINTS (".$year.")</div></td></tr>";
+echo "</table>";
+if ($cpdact>39) { $bgcolor="#4D944D"; } else  { $bgcolor="#FF3333"; }
+echo "<table width='80%' border='0' cellpadding='2' cellspacing='2' class='tablestyleB' bgcolor='#f1988a'>";
+echo "<tr><td bgcolor='#cccccc' width='15%' align=center><b>Jumlah Point Terkumpul</b></td><td bgcolor='#ffffff' align='center' width='15%'>". $cpdcum ."</td><td bgcolor='#cccccc' width='15%' align=center><b>Jumlah Point Sebenar</b></td><td width='15%' bgcolor='#ffffff' align='center'>". $cpdact."</td><td align=center bgcolor='$bgcolor'><b>Keperluan 40 CPD Point</b></td></tr>";
+echo "</table>";
+}
+// end of mycpd grab function
+
+}
+else
+{
+$querycpd  = "SELECT nokp,year,mycpda,mycpdc,DATE_FORMAT(mycpddate,'%d-%m-%Y') as datecpd FROM infokursus WHERE nokp = '$nokp' AND year = '$year'";
+$resultcpd = mysqli_query($querycpd);
+$foundcpd = mysqli_num_rows($resultcpd);
+$capturecpd = mysqli_fetch_array ($resultcpd);
+$cpdcum=$capturecpd["mycpdc"];
+$cpdact=$capturecpd["mycpda"];
+$cpddate=$capturecpd["datecpd"];
+
+//$cpddate=strtotime($cpddate);
+//$cpddate=date( 'd-m-Y', $cpddate );
+
+echo "<br><table width='100%'' border='0' cellpadding='2' cellspacing='2' class='tablestyleB'>";
+echo "<tr><td align='center' valign='middle' bgcolor=#8B8378 colspan=6><div align='center' class='style21'><label for='tahun'>MAKLUMAT MYCPD POINTS SEHINGGA $cpddate</div></td></tr>";
+echo "</table>";
+if ($cpdact>39) { $bgcolor="#4D944D"; } else  { $bgcolor="#FF3333"; }
+echo "<table width='80%' border='0' cellpadding='2' cellspacing='2' class='tablestyleB' bgcolor='#f1988a'>";
+echo "<tr><td bgcolor='#cccccc' width='15%' align=center><b>Jumlah Point Terkumpul</b></td><td bgcolor='#ffffff' align='center' width='15%'>". $cpdcum ."</td><td bgcolor='#cccccc' width='15%' align=center><b>Jumlah Point Sebenar</b></td><td width='15%' bgcolor='#ffffff' align='center'>". $cpdact."</td><td align=center bgcolor='$bgcolor'><b>Keperluan 40 CPD Point</b></td></tr>";
+echo "</table>";
+
+}
+
+
+
+?>
+<br>
+
+<table width="100%" border="0" cellpadding="2" cellspacing="2" class="tablestyleB">
+<tr>
+<td align="center" valign="middle" bgcolor=#8B8378 colspan=7><div align="center" class="style21">
+
+
+  <form id="form1" name="form1" method="post" action="staff_kursus.php?nokp=<?php  echo $nokp;?>">
+    <label for="tahun">BUTIR - BUTIR KURSUS YANG TELAH DIHADIRI (TAHUN: </label>
+    <select name="tahun">
+      <option value="<?php echo date("Y"); ?>" <?php if ($_POST['tahun']==date("Y")) { echo "selected='selected'";}?> ><?php echo date("Y"); ?></option>
+      <option value="<?php echo date("Y",strtotime("-1 year")); ?>" <?php if ($_POST['tahun']==date("Y",strtotime("-1 year"))) { echo "selected='selected'";}?> ><?php echo date("Y",strtotime("-1 year")); ?></option>
+      <option value="<?php echo date("Y",strtotime("-2 year")); ?>" <?php if ($_POST['tahun']==date("Y",strtotime("-2 year"))) { echo "selected='selected'";}?> ><?php echo date("Y",strtotime("-2 year")); ?></option>
+      
+	  <?php  
+	  
+
+if ($_POST['tahun']=="") {$tahun=date('Y');} else { $tahun = $_POST['tahun'];}
+
+$query2  = "SELECT * FROM peribadi WHERE nokp = '$nokp'";
+$result2 = mysqli_query($query2);
+$found2 = mysqli_num_rows($result2);
+$capture2 = mysqli_fetch_array ($result2);
+
+$query  = "SELECT * FROM kursus	WHERE nokp2 = '$nokp' and YEAR(tarikh_mula)=$tahun ORDER BY tarikh_mula";
+$result = mysqli_query($query);
+$found = mysqli_num_rows($result);
+
+$query3  = "SELECT nama_kursus FROM kursus WHERE nokp2 = '$nokp'	GROUP BY nama_kursus ORDER BY nama_kursus";
+$result3 = mysqli_query($query3);
+
+$nokp = $_GET['nokp'];
+	  
+	  
+	  ?>
+	  
+      
+    </select>
+  )
+  <input type="submit" name="cari" id="cari" value="Cari" />
+  </form>
+ 
+
+</div>
+
+</td>
+</tr>
+
+<tr><td align="center">
+
+<table width="99%" cellpadding="2" cellspacing="2" bordor=1 bgcolor="#f1988a">
+
+<?php  if($found > 0) { ?>
+
+<tr>
+<td align="center" valign="middle" bordercolor="#000000" bgcolor="#CCCCCC" class="style10">NO.</td>
+<td align="center" valign="middle" bordercolor="#000000" bgcolor="#CCCCCC" class="style10">JENIS KURSUS</td>
+<td align="center" valign="middle" bordercolor="#000000" bgcolor="#CCCCCC" class="style10">NAMA KURSUS</td>
+<td align="center" valign="middle" bordercolor="#000000" bgcolor="#CCCCCC" class="style10">TARIKH MULA</td>
+<td align="center" valign="middle" bordercolor="#000000" bgcolor="#CCCCCC" class="style10">TARIKH TAMAT </td>
+<td align="center" valign="middle" bordercolor="#000000" bgcolor="#CCCCCC" class="style10">TEMPOH</td>
+<td align="center" valign="middle" bordercolor="#000000" bgcolor="#CCCCCC" class="style10">STATUS PENGESAHAN</td>
+<?php  if($_SESSION ['level'] > 2) { ?>
+<td align="center" valign="middle" bordercolor="#000000" bgcolor="#CCCCCC" class="style10">HAPUS</td>
+<?php  } ?>
+</tr>
+
+<?php  
+$i=1; 
+$totaldays=0;
+$totalhrs=0;
+while($query = mysqli_fetch_array($result)) {
+$datemula=date('d-m-Y', strtotime($query['tarikh_mula']));	
+$dateakhir=date('d-m-Y', strtotime($query['tarikh_tamat']));
+?>
+
+<tr bgcolor="#ffffff">
+<td bordercolor="#000000" class="style10"><?php  echo $i++; ?></td>
+<td bordercolor="#000000" class="style10" align=center><?php echo $query['jenis_kursus'] ?></td>  
+<?php  if($_SESSION ['level'] > 2 OR ($_SESSION ['level'] == 1 AND $query['valid'] == 0 )) { ?>
+<td bordercolor="#000000" class="style10" align="left">
+<a class="style10" href='staff_kursus_detail.php?nokp=<?php  echo $nokp; ?>&id=<?php echo $query['id'] ?>&nama_kursus=<?php echo $query['nama_kursus'] ?>' ><?php echo $query['nama_kursus'] ?></a></td>
+<?php  } else {?>
+<td bordercolor="#000000" class="style10" align="left"><?php echo $query['nama_kursus'] ?></td>         
+<?php  } ?>          
+<td bordercolor="#000000" class="style10"><div align="center"><?php echo $datemula ?></div></td>
+<td bordercolor="#000000" class="style10"><div align="center"><?php echo $dateakhir ?></div></td>
+<td bordercolor="#000000" class="style10"><div align="center"><?php echo $query['total_hari'] ?> hari <?php echo $query['jam_tinggal'] ?> jam</div></td>    
+<?php  if($query['valid'] == 1) { ?>
+<td bgcolor='#4D944D'>DISAHKAN</td>
+<?php  } else { ?>
+<td bgcolor='#CCFF33'>BELUM DISAHKAN</td>
+<?php  } ?>
+<?php  if($_SESSION ['level'] > 2) { ?>
+   <td align="center"><a onclick="return confirmSubmit();" href="staff_kursus_delete_berjaya.php?nokp=<?php  echo $nokp;?>&amp;nama_kursus=<?php echo urlencode($query['nama_kursus']) ?>&amp;
+id=<?php echo $query['id'] ?>"><img src='images/delete.png' title='Hapuskan rekod ini?' width='16' height='16' border='0' /></a></td> 
+<?php  } ?>
+</tr>
+<?php           
+if($query['valid'] == 1)
+{       
+$totaldays=$totaldays+$query['total_hari']; 
+$totalhrs=$totalhrs+$query['jam_tinggal']; 
+}   
+} 
+?>
+
+<tr bgcolor="#f1e6e5">
+<td colspan=7>
+<?php  if($_SESSION ['level'] > 2 OR ($_SESSION ['level'] == 1 AND $query['valid'] == 0 )) { ?>
+<div align="left"><span class="style25"><a id="blink" style="text-decoration:blink">* Pilih 'NAMA KURSUS' jika anda ingin kemaskini rekod <br>
+( Kakitangan sendiri masih boleh meminda maklumat kursus yang belum disahkan. Kursus yang telah disahkan hanya boleh dipinda oleh Unit Latihan )</a> </span></div>
+<?php  } ?>
+
+<?php //report tahun semasa
+if ($tahun==date('Y')) { 
+?>
+<form action="report_kursus_individu.php" method="post" name="report7" target="_blank" id="report7">
+<input name="tarikh_mula" type="hidden" id="tarikh_mula" value="01-01-<?php echo date("Y");?>">
+<input name="tarikh_tamat" type="hidden" id="tarikh_tamat" value="<?php echo date('d-m-Y');?>">
+<input type="hidden" name="nokp" id="nokp" value="<?php echo $nokp; ?>">
+<div align="right"><input type="submit" value="Cetak Laporan Latihan Tahun Semasa"></div>
+<!-- <input type="image" src="images/print_button_icon21.png" width="70" height="30" align="right" alt="Submit Form" border=0>  -->
+</form> 
+<?php //report tahun lain
+} else 
+{
+?>
+<form action="report_kursus_individu.php" method="post" name="report7" target="_blank" id="report7">
+<input name="tarikh_mula" type="hidden" id="tarikh_mula" value="01-01-<?php echo $tahun;?>">
+<input name="tarikh_tamat" type="hidden" id="tarikh_tamat" value="31-12-<?php echo $tahun;?>">
+<input type="hidden" name="nokp" id="nokp" value="<?php echo $nokp; ?>">
+<div align="right"><input type="submit" value="Cetak Laporan Latihan Tahun <?php echo $tahun;?>"></div>
+</form> 
+<?php
+}
+?>
+</td>
+</tr>
+
+<tr bgcolor="#f1e6e5">
+<?php 
+if ($totalhrs>5){
+$hourstoday=floor($totalhrs/6);	
+$totaldays=$totaldays+$hourstoday;
+$totalhrscalculated=$totalhrs%6;
+} else {
+$totaldays=$totaldays+0;
+$totalhrscalculated=$totalhrs;
+}
+
+if ($totaldays>6){
+?>
+<td colspan=7 align=center bgcolor=#4D944D>
+<strong>[ Jumlah kursus: <?php echo $totaldays;?> hari <?php echo $totalhrscalculated;?> jam berdasarkan 6 jam = 1 hari ]</strong><br>
+*Hanya kursus yang telah disahkan akan dikira
+<?php  
+} else {
+?>
+<td colspan=7 align=center bgcolor=#FF3333>
+<strong>[ Jumlah kursus: <?php echo $totaldays;?> hari <?php echo $totalhrscalculated;?> jam berdasarkan 6 jam = 1 hari ]</strong><br>*Hanya kursus yang telah disahkan akan dikira
+<?php 
+}
+?>
+
+</td>
+</tr>
+
+<?php  } ?>
+<?php  if($found == 0) { ?>
+
+<tr>
+<td width="100%" colspan="7" align="center" valign="middle" class="style22">TIADA KURSUS YANG TELAH DIHADIRI !!</td>
+</tr>
+
+<?php  } ?>		
+</table></td>
+</tr>
+</table>
+
+<br />
+           
+</td>
+<?php include('footer.php'); ?> 
+<?php 
+}
+else
+{
+?>
+<script language="javascript" type="text/javascript">
+alert('Hanya Pengguna Berdaftar Dibenarkan Menggunakan Sistem Ini');
+location='index.php';
+</script>
+<?php 
+}
+?>
